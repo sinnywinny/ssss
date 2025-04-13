@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sinner's site</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ysabeau+Infant:wght@300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            background-color: transparent;
+        }
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            text-align: center;
+            cursor: pointer;
+        }
+        .overlay h1 {
+            font-family: 'Ysabeau Infant', sans-serif;
+            color: white;
+            font-size: 24px;
+            font-weight: 300;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        }
+        .container {
+            display: none;
+            background-color: transparent;
+            border-radius: 15px;
+            padding: 40px 30px;
+            width: 380px;
+            text-align: center;
+            box-shadow: none;
+        }
+        h1 {
+            font-size: 24px;
+            color: #FF69B4;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+            font-weight: 300;
+        }
+        p {
+            font-size: 14px;
+            color: #ccc;
+            margin-top: 10px;
+        }
+        a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .button {
+            background-color: #008000;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .button:hover {
+            background-color: #006400;
+            transform: translateY(-2px);
+        }
+        .update-message {
+            font-size: 12px;
+            color: #888;
+            margin-top: 15px;
+        }
+        .audio-player {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            z-index: 20;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        audio {
+            display: none;
+        }
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .play-pause-btn {
+            width: 30px;
+            height: 30px;
+            background-color: #FF69B4;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        .play-pause-btn:hover {
+            background-color: #FF1493;
+        }
+        .progress-bar {
+            flex-grow: 1;
+            margin: 0 10px;
+            height: 5px;
+            background-color: #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .progress {
+            height: 100%;
+            width: 0;
+            background-color: #FF69B4;
+            border-radius: 5px;
+        }
+        .volume-control {
+            width: 40px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .volume-bar {
+            flex-grow: 1;
+            height: 5px;
+            background-color: #888;
+            border-radius: 5px;
+        }
+        .volume {
+            height: 100%;
+            width: 100%;
+            background-color: #FF69B4;
+            border-radius: 5px;
+        }
+        body.noscript {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <noscript>
+        <style>
+            body {
+                display: none;
+            }
+        </style>
+        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; color: white; display: flex; align-items: center; justify-content: center; z-index: 9999; font-family: Arial, sans-serif; text-align: center;">
+            <h1>JavaScript is required to view this site.</h1>
+            <p>Please enable JavaScript in your browser settings and refresh the page.</p>
+        </div>
+    </noscript>
+
+    <video id="background-video" muted>
+        <source src="https://files.catbox.moe/rwycns.mp4" type="video/mp4">
+        Your browser does not support the video element.
+    </video>
+
+    <div class="overlay" onclick="startMedia()">
+        <h1 class="info-text">Click to check sinner's term status and socials</h1>
+    </div>
+
+    <div class="container">
+        <h1>@osints is not terminated</h1>
+        <p><a href="" target="_blank">#opseclikebedrock</a></p>
+        <button class="button">Active</button>
+        <p class="update-message">IF I GET TERMINATED, THIS WILL BE UPDATED.</p>
+    </div>
+
+    <div class="audio-player">
+        <div class="audio-controls">
+            <button class="play-pause-btn" onclick="togglePlayPause()">▶</button>
+            <div class="progress-bar" onclick="seekAudio(event)">
+                <div class="progress"></div>
+            </div>
+            <div class="volume-control" onclick="adjustVolume(event)">
+                <div class="volume"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const audio = new Audio('https://files.catbox.moe/kbhock.mp3');
+        const playPauseBtn = document.querySelector('.play-pause-btn');
+        const progressBar = document.querySelector('.progress');
+        const progressBarContainer = document.querySelector('.progress-bar');
+        const volumeBar = document.querySelector('.volume');
+        let isPlaying = false;
+
+        function startMedia() {
+            console.log("startMedia triggered");
+            const video = document.getElementById('background-video');
+            video.play();
+            audio.play();
+            document.querySelector('.overlay').style.display = 'none';
+            document.querySelector('.container').style.display = 'block';
+        }
+
+        function togglePlayPause() {
+            if (isPlaying) {
+                audio.pause();
+                playPauseBtn.textContent = '▶';
+            } else {
+                audio.play();
+                playPauseBtn.textContent = '❚❚';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        audio.ontimeupdate = function () {
+            const progress = (audio.currentTime / audio.duration) * 100;
+            progressBar.style.width = `${progress}%`;
+        };
+
+        function seekAudio(event) {
+            const clickX = event.offsetX;
+            const width = progressBarContainer.offsetWidth;
+            const duration = audio.duration;
+            audio.currentTime = (clickX / width) * duration;
+        }
+
+        function adjustVolume(event) {
+            const clickX = event.offsetX;
+            const width = volumeBar.offsetWidth;
+            const volume = clickX / width;
+            audio.volume = volume;
+            volumeBar.style.width = `${volume * 100}%`;
+        }
+
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            alert("Error");
+        });
+
+        document.addEventListener('keydown', function (e) {
+            const blockedKeys = ["F12", "F11", "F10", "F9"];
+            const blockedCombos = [
+                e.ctrlKey && e.key === "U",
+                e.ctrlKey && e.shiftKey && e.key === "I",
+                e.ctrlKey && e.shiftKey && e.key === "J",
+                e.ctrlKey && e.key === "P",
+                e.ctrlKey && e.shiftKey && e.key === "C",
+                e.ctrlKey && e.shiftKey && e.key === "K",
+                e.ctrlKey && e.key === "S",
+                e.metaKey && e.key === "Q",
+                e.metaKey && e.key === "I",
+            ];
+            if (blockedKeys.includes(e.key) || blockedCombos.some(combo => combo)) {
+                e.preventDefault();
+                alert("Error");
+            }
+        });
+    </script>
+</body>
+</html>
